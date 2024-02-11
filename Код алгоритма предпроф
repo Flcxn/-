@@ -1,0 +1,82 @@
+#include <Servo.h> 
+
+
+Servo myservo; 
+int servoh = 180;   
+int  limithigh = 360;
+int limitlow = 0;
+
+int arbuz = 20;
+int h=0;
+int f = 0;
+void setup()
+{
+  Serial.begin(57600); 
+  pinMode(A0, INPUT);
+  pinMode(A1, INPUT);
+  pinMode(6, OUTPUT);
+  myservo.attach(3);
+
+}
+void loop() 
+{
+  int l = analogRead(A0); 
+  int r = analogRead(A1); 
+
+  int razniza1= abs(l - r); 
+  int razniza2= abs(r - l);
+
+  
+
+
+  
+      
+  
+  if(razniza1 >= arbuz) {
+    
+    
+
+    if (l > r) 
+    {
+      int h = 0;
+      myservo.write(h);
+      delay(250);
+      myservo.write(90);
+       f = f+1;
+    }
+    if (l < r)
+    {
+      int h = 180;
+      myservo.write(h);
+      delay(250);
+      myservo.write(90);
+       f = f-1;
+   
+  }
+   if (f>7){
+      myservo.write(180);
+      delay(2000);
+      myservo.write(90);
+       f = 0;
+    }
+    if (f<-7){
+      myservo.write(0);
+      delay(2000);
+      myservo.write(90);
+       f = 0;
+    }
+  }
+ 
+  Serial.println(l);
+  Serial.print(' ');
+
+  Serial.println(r);
+  Serial.println(' ');
+
+  Serial.println(f);
+  Serial.println(' ');
+
+
+  delay(1000);
+}
+  
